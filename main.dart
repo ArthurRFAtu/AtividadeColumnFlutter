@@ -1,66 +1,62 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-void main() {
-  runApp(ComponeteInicial());
+main() {
+  runApp(ComponenteInicial());
 }
-class ComponeteInicial extends StatelessWidget{
-    Widget build (BuildContext context){
-      return MaterialApp(
-         debugShowCheckedModeBanner: false,
-        home:Scaffold(
-     appBar: AppBar(
-          title: Text('Perguntas e Respostas'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                   SizedBox(height:100),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      elevation: 20,
-                      shadowColor: Colors.purple,
-                    ),
-                    onPressed: () {},
-                    child: Text('Enviar',style: TextStyle(color: Colors.white),),
-                  ),
-                  TextButton(
-                     style: TextButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      elevation: 20,
-                      shadowColor: Colors.purple,
-                    ),
-                    onPressed: () {},
-                    child: Text('Cancelar',style: TextStyle(color: Colors.white),),
-                  ),
-                  TextButton(
-                     style: TextButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      elevation: 20,
-                      shadowColor: Colors.purple,
-                    ),
-                    onPressed: () {},
-                    child: Text('Salvar',style: TextStyle(color: Colors.white)),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text('Aprendendo',style: TextStyle(color:Colors.blueGrey),),
-                  Text('Programação',style: TextStyle(color:Colors.blueGrey),),
-                  Text('Flutter',style: TextStyle(color:Colors.blueGrey),),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+
+class ComponenteInicial extends StatefulWidget {
+  @override
+  State<ComponenteInicial> createState() => _ComponenteInicialState();
+}
+
+class _ComponenteInicialState extends State<ComponenteInicial> {
+  var  cont = 0;
+
+  final perguntas = [
+    "Sua cor favorita",
+    "Sua rede social favorita",
+    "Seu alimento favorito",
+    "Seu animal favorito"
+  ];
+
+  void botao() {
+    setState(() {
+      contador:
+      cont++;
+    });
+    print(cont);
+  }
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            appBar: AppBar(
+              title: Text("Perguntas e respostas!"),
+            ),
+            body: Column(
+              children: [
+                Text(perguntas[cont]),
+                ElevatedButton(
+                  onPressed: botao,
+                  child: Text("Clique"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    print("Outra função");
+                  },
+                  child: Text("Clique"),
+                ),
+                ElevatedButton(
+                  onPressed: () => print("Função arrow"),
+                  child: Text("Meu botao"),
+                ),
+                Column(children: <Widget>[
+                  Text('Aprendendo'),
+                  Text('Programação'),
+                  Text('Flutter'),
+                ]),
+              ],
+            )));
   }
 }
