@@ -1,62 +1,46 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-main() {
-  runApp(ComponenteInicial());
+import './botao.dart';
+
+void main() {
+  runApp(MaterialApp(
+    home: MyApp(),
+  ));
 }
 
-class ComponenteInicial extends StatefulWidget {
+class MyApp extends StatefulWidget {
   @override
-  State<ComponenteInicial> createState() => _ComponenteInicialState();
+  // ignore: library_private_types_in_public_api
+  _MyAppState createState() => _MyAppState();
 }
 
-class _ComponenteInicialState extends State<ComponenteInicial> {
-  var  cont = 0;
+class _MyAppState extends State<MyApp> {
+  List<Widget> botoes = []; // uma lista de widgets (botões)
+  String textobotao = '';
 
-  final perguntas = [
-    "Sua cor favorita",
-    "Sua rede social favorita",
-    "Seu alimento favorito",
-    "Seu animal favorito"
-  ];
-
-  void botao() {
-    setState(() {
-      contador:
-      cont++;
-    });
-    print(cont);
-  }
-
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text("Perguntas e respostas!"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Botão Dinâmico'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              onChanged: (Text) {
+              textobotao = Text;
+              print(textobotao);
+            }),
+           
+            botao("oi eu sou um botao"),
+            SizedBox(height: 16.0), // um espaço vazio para separar os botões
+            Column(
+              children: botoes, // Mostra todos os botões da lista
             ),
-            body: Column(
-              children: [
-                Text(perguntas[cont]),
-                ElevatedButton(
-                  onPressed: botao,
-                  child: Text("Clique"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    print("Outra função");
-                  },
-                  child: Text("Clique"),
-                ),
-                ElevatedButton(
-                  onPressed: () => print("Função arrow"),
-                  child: Text("Meu botao"),
-                ),
-                Column(children: <Widget>[
-                  Text('Aprendendo'),
-                  Text('Programação'),
-                  Text('Flutter'),
-                ]),
-              ],
-            )));
+          ],
+        ),
+      ),
+    );
   }
 }
