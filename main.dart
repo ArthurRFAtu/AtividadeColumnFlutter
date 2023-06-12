@@ -1,45 +1,69 @@
 import 'package:flutter/material.dart';
-import './botao.dart';
+import './questao.dart';
+import './resposta.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: MyApp(),
-  ));
+main() {
+  runApp(AulaComponentes());
 }
 
-class MyApp extends StatefulWidget {
+class AulaComponentes extends StatefulWidget{
   @override
-  // ignore: library_private_types_in_public_api
-  _MyAppState createState() => _MyAppState();
+  State<AulaComponentes> createState() => _AulaComponentesState();
 }
 
-class _MyAppState extends State<MyApp> {
-  List<Widget> botoes = []; // uma lista de widgets (botões)
-  String textobotao = '';
+class _AulaComponentesState extends State<AulaComponentes> {
 
-  @override
+  var perguntaAtual = 0;
+  var cor = Colors.white;
+
+  final List<Map<String, Object>> questionario = [
+    {
+      "pergunta": "Qual a sua cor favorita?",
+      "respostas": ["Amarelo", "Preto", "Branco", "Azul", "Vermelho"]
+    },
+    {
+      "pergunta": "Qual é seu animal favorito?",
+      "respostas": ["Cachorro", "Gato", "Tartaruga", "Periquito"]
+    },
+    {
+      "pergunta": "Qual sua linguagem favorita?",
+      "respostas": ["Python", "Java", "JavaScript"]
+    },
+  ];
+
+  bool get temPergunta {
+    return perguntaAtual < questionario.length;
+  }
+  
+  void acao() {
+    setState(() {
+      perguntaAtual++;
+    });
+    print(perguntaAtual);
+  }
+
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Botão Dinâmico'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              onChanged: (Text) {
-              textobotao = Text;
-              print(textobotao);
-            }),
-           
-            botao("oi eu sou um botao"),
-            SizedBox(height: 16.0), // um espaço vazio para separar os botões
-            Column(
-              children: botoes, // Mostra todos os botões da lista
-            ),
-          ],
+
+    List<Widget> respostas = [];
+
+    if (temPergunta) {
+      for (var resposta in questionario[perguntaAtual]["respostas"] as List<String>) {
+        respostas.add(
+          Resposta(resposta, acao),
+        );
+      }
+    }
+    
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: temPergunta ? Questao(questionario[perguntaAtual]["pergunta"].toString()) : Questao("Terminou"),
         ),
+        body: temPergunta ? Column(
+          children: [
+            ...respostas,
+          ],
+        ) : Text("Resultado"),
       ),
     );
   }
